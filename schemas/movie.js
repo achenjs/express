@@ -36,6 +36,9 @@ MovieShema.statics = {
   },
   findById(id, cb) {
     return this.findOne({_id: id}).exec(cb)
+  },
+  deleteId(id, cb) {
+    return this.remove({_id: id}).exec(cb)
   }
 }
 

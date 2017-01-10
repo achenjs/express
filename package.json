@@ -1,8 +1,15 @@
 {
+  "scripts": {
+    "dev": "webpack-dev-server"
+  },
   "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
     "body-parser": "^1.15.2",
+    "express-session": "^1.14.2",
     "jade": "^1.11.0",
-    "moment": "^2.17.1"
+    "moment": "^2.17.1",
+    "sha1": "^1.1.1"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",

@@ -8,6 +8,11 @@ var UserSchema = new mongoose.Schema({
     },
     nickname: String,
     password: String,
+    // 0: nimal user  1: verified user 2: professonal user
+    role: {
+        type: Number,
+        default: 0
+    },
     meta: {
         createAt: {
             type: Date,
@@ -45,7 +50,10 @@ UserSchema.methods = {
 // 静态
 UserSchema.statics = {
     fetch(cb) {
-      return this.find({}).sort('meta.updateAt').exec(cb)
+      return this
+          .find({})
+          .sort('meta.updateAt')
+          .exec(cb)
     },
     findByName(name, cb) {
       return this.find({name: name}).exec(cb)

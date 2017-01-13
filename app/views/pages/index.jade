@@ -3,11 +3,18 @@ extends ../layout
 block content
   .container
     .row
-      each item in movies
-        .col-md-2
-          .thumbnail
-            a(href="/movie/#{item._id}")
-              img(src="#{item.poster}", alt="#{item.title}")
-            .caption
-              h3= title
-              p: a.btn.btn-primary(href="/movie/#{item._id}", role="button") 观看预告片
+      each cat in categories
+        .panel.panel-default
+          .panel-heading
+            h3 #{cat.name}
+              a.more(href="/results?cat="+cat._id+"&page=1") 更多&gt;&gt;
+          .panel-body
+            if cat.movies && cat.movies.length > 0
+              each item in cat.movies
+                .col-md-2
+                  .thumbnail
+                    a(href="/movie/#{item._id}")
+                        img(src="#{item.poster}", alt="#{item.title}")
+                    .caption
+                      h4 #{item.title}
+                      p: a.btn.btn-primary(href="/movie/#{item._id}", role="button") 观看预告片

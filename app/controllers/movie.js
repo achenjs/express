@@ -1,35 +1,35 @@
 const _ = require('underscore')
 const Movie = require('../models/movie')
+const Category = require('../models/category')
 
 exports.detail = function (req, res) {
     //detail page
     const id = req.params.id
     Movie.findById(id,(err, movies) => {
-        Comment.find({movie: id}, (err, comments) => {
-            console.log(comments)
-            res.render('details', {
-                title: 'express ' + movies.title,
-                movie: movies,
-                comments: comments
+        Comment
+            .find({movie: id})
+            .populate('from', 'name')
+            .populate('reply.from reply.to', 'name')
+            .exec(function(err, comments) {
+                res.render('details', {
+                    title: movies.title,
+                    movie: movies,
+                    comments: comments
+                })
             })
-        })
     })
 }
 
 exports.new = function (req, res) {
     //admin new page
-    res.render('admin', {
-        title: 'express 后台录入页',
-        movie: {
-            doctor: '',
-            country: '',
-            title: '',
-            year: '',
-            poster: '',
-            language: '',
-            flash: '',
-            summary: ''
-        }
+    Category.fetch((err, categories) => {
+        console.log(categories)
+        if(err) console.error(err)
+        res.render('admin', {
+            title: 'express 后台录入页',
+            movie: {},
+            categories: categories
+        })
     })
 }
 
@@ -38,9 +38,12 @@ exports.update = function (req, res) {
     const id = req.params.id
     if(id) {
         Movie.findById(id, (err, movies) => {
-            res.render('admin', {
-                title: '后台更新页',
-                movie: movies
+            Category.find({}, (err, categories) => {
+                res.render('admin', {
+                    title: 'express 后台更新页',
+                    movie: movies,
+                    categories: categories
+                })
             })
         })
     }
@@ -51,7 +54,7 @@ exports.save = function (req, res) {
     var id = req.body.movie._id
     var movieObj = req.body.movie
     var _movie
-    if(id !== 'undefined') {
+    if(id) {
         Movie.findById(id, (err, movies) => {
             if(err) console.error(err)
             _movie = _.extend(movies, movieObj)
@@ -61,19 +64,33 @@ exports.save = function (req, res) {
             })
         })
     }else {   // 新增的电影
-        _movie = new Movie({
-            doctor: movieObj.doctor,
-            title: movieObj.title,
-            country: movieObj.country,
-            language: movieObj.language,
-            year: movieObj.year,
-            poster: movieObj.poster,
-            summary: movieObj.summary,
-            flash: movieObj.flash
-        })
+        _movie = new Movie(movieObj)
+        var categoryId = _movie.category
         _movie.save((err,movie) => {
             if(err) console.error(err)
-            res.redirect('/movie/' + movie._id)
+            if(categoryId) {
+                Category.findById(categoryId, (err, category) => {
+                    category.movies.push(movie._id)
+                    category.save((err, category) => {
+                        if(err) console.error(err)
+                        res.redirect('/movie/' + movie._id)
+                    })
+                })
+            }else {
+                // 新增类别
+                var category = new Category({
+                    name: movieObj.categoryName,
+                    movies: [movie._id]
+                })
+                category.save((err, category) => {
+                    if(err) console.error(err)
+                    movie.category = category._id
+                    movie.save((err, movie) => {
+                        if(err) console.error(err)
+                        res.redirect('/movie/' + movie._id)
+                    })
+                })
+            }
         })
     }
 }

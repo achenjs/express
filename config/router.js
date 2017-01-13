@@ -1,7 +1,8 @@
 const Index = require('../app/controllers/index')
 const User = require('../app/controllers/user')
 const Movie = require('../app/controllers/movie')
-const  Comment = require('../app/controllers/comment')
+const Comment = require('../app/controllers/comment')
+const Category = require('../app/controllers/category')
 
 module.exports = function (app) {
     app.use((req, res, next) => {
@@ -35,4 +36,12 @@ module.exports = function (app) {
 
     // Comment
     app.post('/user/comment', User.signinRequired, Comment.save)
+
+    // Category
+    app.get('/admin/category', User.signinRequired, User.adminRequired, Category.new)
+    app.post('/admin/category/new', User.signinRequired, User.adminRequired, Category.save)
+    app.get('/admin/category/list', User.signinRequired, User.adminRequired, Category.list)
+
+    // Results
+    app.get('/results', Index.search)
 }

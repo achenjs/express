@@ -3,11 +3,11 @@ const app = express()
 const User = require('../models/user')
 
 exports.showSignup = function (req, res) {
-    res.render('signup')
+    return res.render('signup')
 }
 
 exports.showSignin = function (req, res) {
-    res.render('signin')
+    return res.render('signin')
 }
 
 exports.signup = function (req, res) {
@@ -48,7 +48,7 @@ exports.signin = function (req, res) {
                 req.session.user = user;
                 return res.redirect('/')
             }else{
-                res.send({
+                return res.send({
                     success: "密码错误！"
                 })
             }
@@ -59,14 +59,14 @@ exports.signin = function (req, res) {
 exports.signout = function (req, res) {
     delete req.session.user
     delete app.locals.user
-    res.redirect('/')
+    return res.redirect('/')
 }
 
 
 exports.list = function (req, res) {
     User.fetch((err, userList) => {
         if(err) console.error(err)
-        res.render('userList', {
+        return res.render('userList', {
             title: 'express 用户列表页',
             userlist: userList
         })
@@ -76,7 +76,7 @@ exports.list = function (req, res) {
 exports.signinRequired = function (req, res, next) {
     var user = req.session.user
     if(!user) {
-        res.redirect('/signup')
+        return res.redirect('/signin')
     }
     next()
 }
@@ -84,7 +84,7 @@ exports.signinRequired = function (req, res, next) {
 exports.adminRequired = function (req, res, next) {
     var user = req.session.user
     if(user.role <= 10) {
-        res.redirect('/signin')
+        return res.redirect('/signin')
     }
     next()
 }

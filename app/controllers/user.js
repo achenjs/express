@@ -17,7 +17,7 @@ exports.signup = function (req, res) {
     User.findByName(name, (err, movie) => {
         if(err) console.error(err)
         if(movie.length !== 0) {
-            res.send({
+            return res.send({
                 success: "用户名已存在"
             })
         }else {
@@ -41,18 +41,19 @@ exports.signin = function (req, res) {
             res.send({
                 success: "用户不存在!"
             })
+        }else {
+            user.comparePassword(password, (err, isMatch) => {
+                if(err) console.error(err)
+                if(isMatch){
+                    req.session.user = user;
+                    return res.redirect('/')
+                }else{
+                    return res.send({
+                        success: "密码错误！"
+                    })
+                }
+            })
         }
-        user.comparePassword(password, (err, isMatch) => {
-            if(err) console.error(err)
-            if(isMatch){
-                req.session.user = user;
-                return res.redirect('/')
-            }else{
-                return res.send({
-                    success: "密码错误！"
-                })
-            }
-        })
     })
 }
 

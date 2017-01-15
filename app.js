@@ -6,7 +6,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const bodyParser = require('body-parser')
-const port = process.env.PORT || 3333;
+const port = process.env.PORT || 3333
 const app = express()
 const morgan = require('morgan')    // http请求记录中间件
 const mongoStore = require('connect-mongo')(session)
@@ -15,7 +15,7 @@ app.locals.moment = require('moment')
 app.set('views', './app/views/pages')
 app.set('view engine', 'jade')
 app.use(express.static(path.join(__dirname, 'public')))
-
+app.use(require('connect-multiparty')())
 // 表单数据格式化
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());

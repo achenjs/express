@@ -39,7 +39,7 @@ CategorySchema.statics = {
         return this.find({}).sort('meta.update').exec(cb)
     },
     findById: function (id, cb) {
-        return this.find({_id: id}).sort('meta.update').exec(cb)
+        return this.findOne({_id: id}).exec(cb)
     }
 }
 

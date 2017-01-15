@@ -1,10 +1,15 @@
 const _ = require('underscore')
 const Movie = require('../models/movie')
 const Category = require('../models/category')
+const fs = require('fs')
+const path = require('path')
 
 exports.detail = function (req, res) {
     //detail page
     const id = req.params.id
+    Movie.update({_id: id},{$inc:{pv: 1}}, (err) => {
+        console.error(err)
+    })
     Movie.findById(id,(err, movies) => {
         Comment
             .find({movie: id})
@@ -49,11 +54,36 @@ exports.update = function (req, res) {
     }
 }
 
+exports.saveUpload = function(req, res, next){
+    var fileObj = req.files.uploadPoster
+    var filePath = fileObj.path
+    var fileName = fileObj.name
+    if(fileName) {
+        fs.readFile(filePath, (err, data) => {
+            var timestamp = Date.now()
+            var type = fileObj.type.split('/')[1]
+            var poster = timestamp + '.' + type
+            var newPath = path.join(__dirname, '../../', '/public/upload/' + poster)
+            fs.writeFile(newPath, data, (err) => {
+                req.poster = poster
+                next()
+            })
+        })
+    }else {
+        next()
+    }
+}
+
 exports.save = function (req, res) {
     // admin save movie
     var id = req.body.movie._id
     var movieObj = req.body.movie
     var _movie
+
+    if(req.poster) {
+        console.log(11)
+        movieObj.poster = req.poster
+    }
     if(id) {
         Movie.findById(id, (err, movies) => {
             if(err) console.error(err)
@@ -65,7 +95,7 @@ exports.save = function (req, res) {
         })
     }else {   // 新增的电影
         _movie = new Movie(movieObj)
-        var categoryId = _movie.category
+        var categoryId = movieObj.category
         _movie.save((err,movie) => {
             if(err) console.error(err)
             if(categoryId) {

@@ -6,15 +6,11 @@ const Category = require('../app/controllers/category')
 
 module.exports = function (app) {
     app.use((req, res, next) => {
-        // if(!res.headersSent) {
-        //     res.render('404')
-        // }else {
-        //     console.log('session中的用户：'+ req.session.user.name)
-        // }
         var _user = req.session.user
         app.locals.user = _user
         next()
     })
+
     // Index
     app.get('/', Index.index)
 
@@ -44,4 +40,11 @@ module.exports = function (app) {
 
     // Results
     app.get('/results', Index.search)
+
+
+    app.get('*', function(req, res){
+        res.render('404', {
+            title: 'No Found'
+        })
+    });
 }

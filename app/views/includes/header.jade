@@ -7,7 +7,7 @@
       .col-md-8
         form(method='GET', action='/results')
           .input-group.col-sm-4.pull-right
-            input.form-control(type='text', name='q')
+            input.form-control(type='text', name='q', autocomplete="off")
             span.input-group-btn
               button.btn.btn-default(type='submit') 搜索
     .navbar.navbar-default.navbar-fixed-bottom
@@ -32,13 +32,13 @@
             .modal-body
               .form-group
                 label(for="signupName") 用户名
-                input#signupName.form-control(name="user[name]", type="text")
+                input#signupName.form-control(name="user[name]", type="text", autocomplete="off")
               .form-froup
                 label(for="nikeName") 昵称
-                input#nikeName.form-control(name="user[nickname]", type="text")
+                input#nikeName.form-control(name="user[nickname]", type="text", autocomplete="off")
               .form-group
                 label(for="signupPassword") 密码
-                input#signupPassword.form-control(name="user[password]", type="text")
+                input#signupPassword.form-control(name="user[password]", type="password", autocomplete="off")
               .modal-footer
                 button.btn.btn-default(type="button", data-dismiss="modal") 关闭
                 button.btn.btn-success(type="submit") 提交
@@ -51,10 +51,10 @@
             .modal-body
               .form-group
                 label(for="signinName") 用户名
-                input#signinName.form-control(name="user[name]", type="text")
+                input#signinName.form-control(name="user[name]", type="text", autocomplete="off")
               .form-group
                 label(for="signinPassword") 密码
-                input#signinPassword.form-control(name="user[password]", type="text")
+                input#signinPassword.form-control(name="user[password]", type="password", autocomplete="off")
               .modal-footer
                 button.btn.btn-default(type="button", data-dismiss="modal") 关闭
                 button.btn.btn-success(type="submit") 登录

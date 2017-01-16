@@ -9,12 +9,12 @@ block content
                         .modal-body
                             .form-group
                                 label(for="signinName") 用户名
-                                input#signinName.form-control(name="user[name]", type="text")
+                                input#signinName.form-control(name="user[name]", type="text", autocomplete="off")
                             .form-group
                                 label(for="nikeName") 昵称
-                                input#nikeName.form-control(name="user[nikename]", type="text")
+                                input#nikeName.form-control(name="user[nikename]", type="text", autocomplete="off")
                             .form-group
                                 label(for="signinPassword") 密码
-                                input#signinPassword.form-control(name="user[password]", type="password")
+                                input#signinPassword.form-control(name="user[password]", type="password", autocomplete="off")
                             .modal-footer
                                 button.btn.btn-success(type="submit") 注册

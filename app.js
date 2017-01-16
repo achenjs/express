@@ -42,6 +42,6 @@ if('development' === env) {                         // 开发环境
 
 require('./config/router')(app)                     // 放在服务之前，不然会有一段404状态
 
-app.listen(port);
+app.listen(port)
 console.log('express started on port ' + port)
 

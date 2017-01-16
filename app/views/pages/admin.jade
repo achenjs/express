@@ -9,17 +9,17 @@ block content
         .form-group
           label.col-sm-2.control-label 豆瓣搜索
           .col-sm-5
-            input.douban.form-control(type="text")
+            input.douban.form-control(type="text", autocomplete="off")
           .col-sm-3
-            input#douban.btn.btn-info(type="button" value="豆瓣搜索")
+            input#douban.btn.btn-info(type="button", value="豆瓣搜索", autocomplete="off")
         .form-group
-          label.col-sm-2.control-label(for="inputTitle") 电影名字
+          label.col-sm-2.control-label(for="inputTitle", autocomplete="off") 电影名字
           .col-sm-10
-            input#inputTitle.form-control(type="text", name="movie[title]", value=movie.title)
+            input#inputTitle.form-control(type="text", name="movie[title]", value=movie.title, autocomplete="off")
         .form-group
-          label.col-sm-2.control-label(for="inputCatogory") 类别名称
+          label.col-sm-2.control-label(for="inputCatogory", autocomplete="off") 类别名称
           .col-sm-10
-            input#inputCatogory.form-control(type="text", name="movie[categoryName]")
+            input#inputCatogory.form-control(type="text", name="movie[categoryName]", autocomplete="off")
         .form-group
           label.col-sm-2.control-label 电影类别
           each item in categories
@@ -28,42 +28,42 @@ block content
                 input(type="radio", name="movie[category]", value=item._id,
                 checked=item._id.toString()==movie.category.toString())
               else
-                input(type="radio", name="movie[category]", value=item._id)
+                input(type="radio", name="movie[category]", value=item._id, autocomplete="off")
               | #{item.name}
         .form-group
           label.col-sm-2.control-label(for="inputDoctor") 电影导演
           .col-sm-10
-            input#inputDoctor.form-control(type="text", name="movie[doctor]", value=movie.doctor)
+            input#inputDoctor.form-control(type="text", name="movie[doctor]", value=movie.doctor, autocomplete="off")
         .form-group
           label.col-sm-2.control-label(for="inputCountry") 国家
           .col-sm-10
-            input#inputCounrty.form-control(type="text", name="movie[country]", value=movie.country)
+            input#inputCounrty.form-control(type="text", name="movie[country]", value=movie.country, autocomplete="off")
         .form-group
           label.col-sm-2.control-label(for="inputLanguage") 语种
           .col-sm-10
-            input#inputLanguage.form-control(type="text", name="movie[language]", value=movie.language)
+            input#inputLanguage.form-control(type="text", name="movie[language]", value=movie.language, autocomplete="off")
         .form-group
           label.col-sm-2.control-label(for="inputPoster") 海报地址
           .col-sm-10
-            input#inputPoster.form-control(type="text", name="movie[poster]", value=movie.poster)
+            input#inputPoster.form-control(type="text", name="movie[poster]", value=movie.poster, autocomplete="off")
         .form-group
           label.col-sm-2.control-label(for="uploadPoster") 海报上传
           .col-sm-10
-            input#uploadPoster.form-control(type="file", name="uploadPoster")
+            input#uploadPoster.form-control(type="file", name="uploadPoster", autocomplete="off")
         .form-group
           label.col-sm-2.control-label(for="inputFlash") 片源地址
           .col-sm-10
-            input#inputFlash.form-control(type="text", name="movie[flash]", value=movie.flash)
+            input#inputFlash.form-control(type="text", name="movie[flash]", value=movie.flash, autocomplete="off")
         .form-group
           label.col-sm-2.control-label(for="inputYear") 上映年代
           .col-sm-10
             input#inputYear.form-control(type="text", name="movie[year]",
-            value=movie.year)
+            value=movie.year, autocomplete="off")
         .form-group
           label.col-sm-2.control-label(for="inputSummary") 电影简介
           .col-sm-10
             input#inputSummary.form-control(type="text", name="movie[summary]",
-            value=movie.summary)
+            value=movie.summary, autocomplete="off")
         .form-group
           .col-sm-10
             input.btn.btn-primary(type="submit" value="录入")

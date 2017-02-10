@@ -6,9 +6,13 @@ const Category = require('../app/controllers/category')
 
 module.exports = function (app) {
     app.use((req, res, next) => {
-        var _user = req.session.user
-        app.locals.user = _user
-        next()
+      if(!req.session) {
+        return next(new Error('oh no'))
+      }
+      var _user = req.session.user
+      console.log(_user)
+      app.locals.user = _user
+      next()
     })
 
     // Index

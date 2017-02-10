@@ -14,7 +14,7 @@ module.exports = {
             .exec(function(err, categories) {
                 if(err) console.error(err)
                 res.render('index', {
-                    title: 'express 首页',
+                    title: '首页',
                     categories: categories
                 })
             })
@@ -33,7 +33,7 @@ module.exports = {
                     var movies = movies || []
                     var results = movies.slice(index, index + count)
                     res.render('search', {
-                        title: 'express 结果列表页面',
+                        title: '结果列表页面',
                         keyword: q,
                         currentPage: page,
                         query: 'q=' + q,
@@ -55,7 +55,7 @@ module.exports = {
                     var movies = category.movies || []
                     var results = movies.slice(index, index + count)
                     res.render('search', {
-                        title: 'express 结果列表页面',
+                        title: '结果列表页面',
                         keyword: category.name,
                         currentPage: page,
                         query: 'cat=' + catId,
@@ -66,7 +66,3 @@ module.exports = {
         }
     }
 }
-
-
-
-

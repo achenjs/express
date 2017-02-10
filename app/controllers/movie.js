@@ -31,7 +31,7 @@ module.exports = {
             console.log(categories)
             if(err) console.error(err)
             res.render('admin', {
-                title: 'express 后台录入页',
+                title: '后台录入页',
                 movie: {},
                 categories: categories
             })
@@ -44,7 +44,7 @@ module.exports = {
             Movie.findById(id, (err, movies) => {
                 Category.find({}, (err, categories) => {
                     res.render('admin', {
-                        title: 'express 后台更新页',
+                        title: '后台更新页',
                         movie: movies,
                         categories: categories
                     })
@@ -78,7 +78,6 @@ module.exports = {
         var _movie
 
         if(req.poster) {
-            console.log(11)
             movieObj.poster = req.poster
         }
         if(id) {
@@ -126,7 +125,7 @@ module.exports = {
         Movie.fetch((err, movies) => {
             if(err) console.error(err)
             res.render('list', {
-                title: 'express 列表页',
+                title: '列表页',
                 movies: movies
             })
         })

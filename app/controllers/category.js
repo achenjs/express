@@ -6,7 +6,7 @@ const Category = require('../models/category')
 module.exports = {
     new: function (req, res) {
         return res.render('category_admin', {
-            title: 'express 创建类别页',
+            title: '创建类别页',
             category: {
                 name: ""
             }
@@ -39,7 +39,7 @@ module.exports = {
         Category.fetch((err, categorylist) => {
             if(err) console.error(err)
             res.render('categorylist', {
-                title: 'express 类别列表页',
+                title: '类别列表页',
                 categorylist: categorylist
             })
         })

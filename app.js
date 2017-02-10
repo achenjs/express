@@ -7,10 +7,11 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const bodyParser = require('body-parser')
 const favicon = require('serve-favicon')
-const port = process.env.PORT || 3333
+const PORT = process.env.PORT || 4545
 const app = express()
 const morgan = require('morgan')                              // http请求记录中间件
-const mongoStore = require('connect-mongo')(session)
+// const mongoStore = require('connect-mongo')(session)
+const RedisStore = require('connect-redis')(session)
 mongoose.connect('mongodb://localhost/express')
 app.locals.moment = require('moment')
 app.set('views', './app/views/pages')
@@ -21,13 +22,23 @@ app.use(favicon(__dirname + '/public/favicon.ico'))
 // 表单数据格式化
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
+
+require('./config/redis')
+
 app.use(session({
   secret: 'keyboard cat',
   resave: true,
+  saveUninitialized: true,
   rolling: true,
-  store: new mongoStore({
-    url: 'mongodb://localhost/express',
-    collection: 'sessions'
+  // store: new mongoStore({
+  //   url: 'mongodb://localhost/express',
+  //   collection: 'sessions'
+  // }),
+  secret: '123456',
+  store: new RedisStore({
+    'host': '127.0.0.1',
+    'port': '6379',
+    'ttl': 60 * 60 * 24 * 30
   }),
   cookie: {maxAge: 3600 * 1000}
 }))
@@ -42,6 +53,5 @@ if('development' === env) {                         // 开发环境
 
 require('./config/router')(app)                     // 放在服务之前，不然会有一段404状态
 
-app.listen(port)
-console.log('express started on port ' + port)
-
+app.listen(PORT)
+console.log('express started on port ' + PORT)
